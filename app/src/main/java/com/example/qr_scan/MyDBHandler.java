@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
@@ -57,9 +58,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // at last we are calling a exec sql
         // method to execute above sql query
         db.execSQL(query);
+
+
+
     }
 
-    // this method is use to add new course to our sqlite database.
+    // this method is use to add new student to our sqlite database.
     public void addNewCourse(String courseName, String courseDuration, String courseDescription, String courseTracks) {
 
         // on below line we are creating a variable for
@@ -85,6 +89,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // at last we are closing our
         // database after adding database.
         db.close();
+
+
     }
     // we have created a new method for reading all the courses.
     public ArrayList<StudentModal> readCourses() {
@@ -103,8 +109,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
             do {
                 // on below line we are adding the data from cursor to our array list.
                 courseModalArrayList.add(new StudentModal(cursorCourses.getString(1),
-                        cursorCourses.getString(4),
                         cursorCourses.getString(2),
+                        cursorCourses.getString(4),
                         cursorCourses.getString(3)));
             } while (cursorCourses.moveToNext());
             // moving our cursor to next.
@@ -112,8 +118,31 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // at last closing our cursor
         // and returning our array list.
         cursorCourses.close();
+        conRollQr();
         return courseModalArrayList;
     }
+
+    //fetched the roll  number
+    public List<String> conRollQr() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        //ArrayList rollNo1= new ArrayList();
+        List<String> rollNo1 = new ArrayList<String>();
+        String rollNo;
+        Cursor cursorCourses1 = db.rawQuery("SELECT *  FROM " + TABLE_NAME, null);
+        int cnt = cursorCourses1.getCount();
+
+        //ArrayList<StudentModal> studentRollNolist = new ArrayList<>();
+        try {
+            if (cursorCourses1.getCount() > 0) {
+                cursorCourses1.moveToFirst();
+                rollNo = cursorCourses1.getString(cursorCourses1.getColumnIndex(DURATION_COL));
+                rollNo1.add(rollNo);
+
+            }
+            return rollNo1;
+        } finally {       cursorCourses1.close(); }
+    }
+
 
 
     @Override

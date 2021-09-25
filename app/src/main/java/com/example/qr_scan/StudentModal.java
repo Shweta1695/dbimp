@@ -1,6 +1,13 @@
 
 package com.example.qr_scan;
 
+import android.graphics.Bitmap;
+
+import com.google.zxing.WriterException;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class StudentModal {
 
 	// variables for our coursename,
@@ -10,6 +17,24 @@ public class StudentModal {
 	private String courseTracks;
 	private String courseDescription;
 	private int id;
+	private Bitmap qrPlaceHolder;
+
+	public Bitmap getQrPlaceHolder(String id) {
+		QRGEncoder qrgEncoder = new QRGEncoder(id, null, QRGContents.Type.TEXT, 500);
+		Bitmap qrBits = null;
+		try {
+			qrBits = qrgEncoder.encodeAsBitmap();
+
+		} catch (WriterException e) {
+			e.printStackTrace();
+		}
+		return qrBits;
+
+	}
+
+	public void setQrPlaceHolder(Bitmap qrPlaceHolder) {
+		this.qrPlaceHolder = qrPlaceHolder;
+	}
 
 	// creating getter and setter methods
 	public String getCourseName() {
@@ -50,6 +75,15 @@ public class StudentModal {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public StudentModal(String courseName, String courseDuration, String courseTracks, String courseDescription, int id, Bitmap qrPlaceHolder) {
+		this.courseName = courseName;
+		this.courseDuration = courseDuration;
+		this.courseTracks = courseTracks;
+		this.courseDescription = courseDescription;
+		this.id = id;
+		this.qrPlaceHolder = qrPlaceHolder;
 	}
 
 	// constructor
