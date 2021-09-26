@@ -1,13 +1,19 @@
 package com.example.qr_scan;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.WriterException;
 
 import java.util.ArrayList;
@@ -16,7 +22,7 @@ import java.util.List;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class ViewStudent extends AppCompatActivity {
+public class ViewStudent extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener   {
 
         // creating variables for our array list,
         // dbhandler, adapter and recycler view.
@@ -25,14 +31,39 @@ public class ViewStudent extends AppCompatActivity {
         private MyDBHandler dbHandler;
         private StudentAdapter courseRVAdapter;
         private RecyclerView coursesRV;
-        //ImageView qrPlaceHolder;
+        protected BottomNavigationView navigationView;
+      //  private ImageButton btn_edit,btn_delete;
+    //ImageView qrPlaceHolder;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_view_student);
-            ImageView qrPlaceHolder=(ImageView)findViewById(R.id.qrPlaceHolder);
 
+            ImageView qrPlaceHolder=(ImageView)findViewById(R.id.qrPlaceHolder);
+            navigationView = (BottomNavigationView) findViewById(R.id.nav_view);
+            navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.action_add:
+                            overridePendingTransition(R.anim.slide_out_down, R.anim.no_anim);
+                            Intent intent1 = new Intent(ViewStudent.this, MainActivity.class);
+                            startActivity(intent1);
+                            break;
+
+                        case R.id.action_view:
+                            overridePendingTransition(R.anim.no_anim, R.anim.slide_out_down);
+                            Intent intent2 = new Intent(ViewStudent.this, ViewStudent.class);
+                            startActivity(intent2);
+                            break;
+                    }
+
+
+                    return false;
+                }
+            });
 
             // initializing our all variables.
             courseModalArrayList = new ArrayList<>();
@@ -72,10 +103,35 @@ public class ViewStudent extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
-
-
-
-
         }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateNavigationBarState();
     }
+
+    private void updateNavigationBarState() {
+        int actionId = getNavigationMenuItemId();
+        selectBottomNavigationBarItem(actionId);
+    }
+
+    private int getNavigationMenuItemId() {
+        return R.id.action_view;
+    }
+
+
+    void selectBottomNavigationBarItem(int itemId) {
+        MenuItem item = navigationView.getMenu().findItem(itemId);
+        item.setChecked(true);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+}

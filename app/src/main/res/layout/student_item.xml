@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -24,64 +24,140 @@
             app:layout_constraintVertical_bias="0.31"
             app:srcCompat="@android:drawable/screen_background_dark_transparent" />
 
-        <!--text view for our course name-->
-
-        <TextView
-            android:id="@+id/idTVCourseName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/qrPlaceHolder"
-            app:layout_constraintStart_toStartOf="@id/qrPlaceHolder"
-            android:text="Course Name"
-            android:textColor="@color/black" />
-
         <LinearLayout
-            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_toRightOf="@+id/qrPlaceHolder"
-            android:layout_below="@+id/idTVCourseName"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:weightSum="3">
 
 
-            <!--text view for our course tracks-->
-            <TextView
-                android:id="@+id/idTVCourseTracks"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/linear_edtbtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/qrPlaceHolder"
                 android:layout_weight="1"
-                android:padding="5dp"
-                android:text="Course Tracks"
-                android:textColor="@color/black" />
+                android:paddingTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/idTVCourseName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1.5"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Course Name"
+                    android:textColor="@color/black"
+                    tools:ignore="NestedWeights" />
+
+                <ImageButton
+                    android:id="@+id/btn_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/white"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gunmetalTwo"
+                    android:textSize="17sp"
+                    android:textStyle="normal" />
 
 
-            <!--text view for our course duration-->
-            <TextView
-                android:id="@+id/idTVCourseDuration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linear_edtbtn"
+                android:layout_toRightOf="@+id/qrPlaceHolder"
                 android:layout_weight="1"
-                android:padding="5dp"
-                android:text="Duration"
-                android:textColor="@color/black" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/idTVCourseTracks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingLeft="5dp"
+                    android:text="Course Tracks"
+                    android:textColor="@color/black" />
+
+
+                <!--text view for our course duration-->
+                <TextView
+                    android:id="@+id/idTVCourseDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="Duration"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linear"
+                android:layout_toRightOf="@+id/qrPlaceHolder"
+                android:layout_weight="1"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/idTVCourseDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toEndOf="@+id/qrPlaceHolder"
+                    android:layout_toRightOf="@+id/qrPlaceHolder"
+                    android:layout_weight="1.5"
+                    android:gravity="bottom"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@id/qrPlaceHolder"
+                    tools:ignore="ObsoleteLayoutParam" />
+
+
+                <ImageButton
+                    android:id="@+id/btn_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_toStartOf="@+id/idTVCourseDescription"
+                    android:layout_toLeftOf="@+id/idTVCourseDescription"
+                    android:layout_weight="0.5"
+                    android:background="@color/white"
+                    android:src="@drawable/cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gunmetalTwo"
+                    android:textSize="17sp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!--text view for our course description-->
-        <TextView
-            android:id="@+id/idTVCourseDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:layout_below="@+id/linear"
-            android:layout_toRightOf="@+id/qrPlaceHolder"
-            android:text="Description"
-            android:textColor="@color/black" />
-
     </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>
