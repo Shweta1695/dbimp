@@ -64,6 +64,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
+
     // this method is use to add new student to our sqlite database.
     public void addNewCourse(String courseName, String courseDuration, String courseDescription, String courseTracks) {
 
@@ -75,17 +76,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // on below line we are creating a
         // variable for content values.
         ContentValues values = new ContentValues();
-
-       /* try {
-            String Query = "Select * from " + TABLE_NAME + " where " + DURATION_COL + " = " + courseDuration;
-            Cursor cursor = db.rawQuery(Query, null);
-            if (cursor.getCount() <= 0) {
-                cursor.close();
-                db.close();
-            }
-        } catch (Exception e) {
-
-         }*/
 
         // on below line we are passing all values
         // along with its key and value pair.
@@ -101,9 +91,27 @@ public class MyDBHandler extends SQLiteOpenHelper {
         // at last we are closing our
         // database after adding database.
         db.close();
-
-
     }
+
+    public Boolean validate(String courseDuration) {
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String Query = "Select * from " + TABLE_NAME + " where " + DURATION_COL + " = " + courseDuration;
+            Cursor cursor = db.rawQuery(Query, null);
+            if (cursor.getCount() <= 0) {
+                cursor.close();
+                db.close();
+                return false;
+            }
+            else
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+
     // we have created a new method for reading all the courses.
     public ArrayList<StudentModal> readCourses() {
         // on below line we are creating a

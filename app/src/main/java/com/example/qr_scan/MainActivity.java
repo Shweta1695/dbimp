@@ -93,13 +93,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     return;
                 }
 
-
+                Boolean val = dbHandler.validate(courseDuration);
                     // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
-                dbHandler.addNewCourse(courseName, courseDuration, courseDescription, courseTracks);
-
-                // after adding the data we are displaying a toast message.
-                Toast.makeText(MainActivity.this, "Student Details Added", Toast.LENGTH_SHORT).show();
+                if(val.equals(false)) {
+                    // after adding the data we are displaying a toast message.
+                    dbHandler.addNewCourse(courseName, courseDuration, courseDescription, courseTracks);
+                    Toast.makeText(MainActivity.this, "Student Details Added", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Roll Number Already Exists", Toast.LENGTH_SHORT).show();
+                }
                 courseNameEdt.setText("");
                 courseDurationEdt.setText("");
                 courseTracksEdt.setText("");
