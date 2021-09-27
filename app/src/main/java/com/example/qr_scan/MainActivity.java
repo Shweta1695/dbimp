@@ -1,15 +1,18 @@
 package com.example.qr_scan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ImageButton addCourseBtn;
     private MyDBHandler dbHandler;
     protected BottomNavigationView navigationView;
+    LinearLayout linear_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         courseDescriptionEdt = findViewById(R.id.idEdtCourseDescription);
         addCourseBtn = findViewById(R.id.idBtnAddCourse);
         readCourseBtn = findViewById(R.id.idBtnReadCourse);
+        linear_main = findViewById(R.id.linear_main);
 
         // creating a new dbhandler class
         // and passing our context to it.
@@ -71,7 +76,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         addCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                InputMethodManager imm = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                }
+                imm.hideSoftInputFromWindow(linear_main.getWindowToken(), 0);
                 // below line is to get data from all edit text fields.
                 String courseName = courseNameEdt.getText().toString();
                 String courseTracks = courseTracksEdt.getText().toString();
@@ -84,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     return;
                 }
 
-                // on below line we are calling a method to add new
+
+                    // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
                 dbHandler.addNewCourse(courseName, courseDuration, courseDescription, courseTracks);
 
